@@ -6,6 +6,7 @@ import {withRouter} from 'react-router-dom'
 
 import UsuarioService from '../app/service/usuarioService'
 import LocalStorageService from '../app/service/localStorageService';
+import {mensagemErro} from '../components/toastr'
 
 class Login extends React.Component {
 
@@ -27,7 +28,7 @@ class Login extends React.Component {
             LocalStorageService.setItem('_user_logado', response.data)
             this.props.history.push('/home')
         }).catch( erro => {
-            console.log(erro.response)
+            mensagemErro(erro.response.data)
         })
     }
 
