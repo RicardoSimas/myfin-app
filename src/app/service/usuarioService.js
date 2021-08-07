@@ -6,6 +6,10 @@ class UsuarioService extends ApiService{
         super('/api/usuarios')
     }
 
+    cadastrar(usuario){
+        return this.post('', usuario);
+    }
+
     autenticar(credenciais){
         return this.post('/autenticar', credenciais);
     }
