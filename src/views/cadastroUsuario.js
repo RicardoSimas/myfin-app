@@ -118,7 +118,7 @@ class CadastroUsuario extends React.Component {
                                         </input>
                                     </FormGroup>
                                     <br />
-                                    <button onClick={this.cadastrar} className="btn btn-success" type="button">Salvar</button>
+                                    <button onClick={this.cadastrar} className="btn btn-success" type="button">Salvar</button>&nbsp;
                                     <button onClick={this.cancelar} className="btn btn-danger" type="button">Cancelar</button>
                                 </fieldset>
                             </div>
