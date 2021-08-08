@@ -25,7 +25,7 @@ class ConsultaLancamentos extends React.Component {
 
     buscar = () => {
 
-        if(!this.state.ano){
+        if (!this.state.ano) {
             messages.mensagemErro('O preenchimento do campo Ano é obrigatório!')
             return false;
         }
@@ -46,6 +46,22 @@ class ConsultaLancamentos extends React.Component {
             }).catch(error => {
                 messages.mensagemErro(error.data)
             })
+    }
+
+    editar = (id) => {
+        console.log('Id editar :', id);
+    }
+
+
+    deletar = (lancamento) => {
+        this.service.deletar(lancamento.id)
+
+        const lancamentos = this.state.lancamentos;
+        const index = lancamentos.indexOf(lancamento);
+        lancamentos.splice(index, 1);
+        this.setState(lancamentos);
+
+        messages.mensagemSucesso('Lançamento deletado com sucesso!')
     }
 
     render() {
@@ -80,7 +96,7 @@ class ConsultaLancamentos extends React.Component {
                                     value={this.state.descricao}
                                     onChange={e => this.setState({ descricao: e.target.value })}
                                     placeholder="Digite a descrição"
-                                    className="form-control"/>
+                                    className="form-control" />
                             </FormGroup>
 
                             <FormGroup htmlFor="selectTipoLancamento" label="Tipo: *">
@@ -91,17 +107,25 @@ class ConsultaLancamentos extends React.Component {
                                     lista={listaTipos} />
                             </FormGroup>
                             <br />
-                            <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>&nbsp;
-                            <button type="button" className="btn btn-danger">Cadastrar</button>
+                            <button onClick={this.buscar}
+                                type="button"
+                                className="btn btn-success">
+                                Buscar
+                            </button>&nbsp;
+                            <button type="button"
+                                className="btn btn-danger">
+                                Cadastrar
+                            </button>
                         </div>
                     </div>
                 </div>
                 <br />
                 <div className="row">
                     <div className="col-md-12">
-                        <div class="bs-component">
-                            <LancamentosTable lancamentos={this.state.lancamentos}>
-
+                        <div className="bs-component">
+                            <LancamentosTable lancamentos={this.state.lancamentos}
+                                deletar={this.deletar}
+                                editar={this.editar}>
                             </LancamentosTable>
                         </div>
                     </div>
@@ -110,5 +134,4 @@ class ConsultaLancamentos extends React.Component {
         )
     }
 }
-
 export default ConsultaLancamentos
