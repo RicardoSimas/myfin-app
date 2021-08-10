@@ -4,6 +4,9 @@ import Navbar from '../components/navbar';
 
 import 'toastr/build/toastr.min.js'
 
+import 'primereact/resources/themes/saga-blue/theme.css'
+import 'primereact/resources/primereact.min.css'
+import 'primeicons/primeicons.css'
 
 import 'bootswatch/dist/flatly/bootstrap.css'
 import '../custom.css'
@@ -15,6 +18,7 @@ class App extends React.Component {
     return (
       <>
         <Navbar></Navbar>
+      
         <div className="container">
           <Rotas />
         </div>
