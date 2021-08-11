@@ -56,6 +56,10 @@ class ConsultaLancamentos extends React.Component {
         console.log('Id editar :', id);
     }
 
+    formCadastrarLancamento = () =>{
+        this.props.history.push('/cadastro-lancamentos');
+    }
+
     abrirConfirmacao = (lancamento) => {
         this.setState({ showConfirmDialog: true, lancamentoDeletar: lancamento })
     }
@@ -134,7 +138,8 @@ class ConsultaLancamentos extends React.Component {
                                 Buscar
                             </button>&nbsp;
                             <button type="button"
-                                className="btn btn-danger">
+                                className="btn btn-danger"
+                                onClick={this.formCadastrarLancamento}>
                                 Cadastrar
                             </button>
                         </div>

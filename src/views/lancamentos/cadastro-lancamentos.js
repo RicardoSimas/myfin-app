@@ -4,6 +4,8 @@ import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/select-menu'
 import LancamentoService from '../../app/service/lancamentoService'
+import LocalStorageService from '../../app/service/localStorageService'
+import * as messages from '../../components/toastr'
 
 class CadastroLancamentos extends React.Component {
 
@@ -34,7 +36,28 @@ class CadastroLancamentos extends React.Component {
     }
 
     submit = () => {
-        console.log(this.state);
+
+        const usuarioLogado = LocalStorageService.getItem('_user_logado')
+
+
+        const { descricao, valor, mes, ano, tipo } = this.state;
+
+        const lancamento = {
+            descricao: descricao,
+            valor: valor,
+            mes: mes,
+            ano: ano,
+            tipo: tipo,
+            usuario: usuarioLogado.id
+        };
+
+        this.lancamentoService.salvar(lancamento)
+            .then(response => {
+                this.props.history.push('/consulta-lancamentos');
+                messages.mensagemSucesso('Lançamento salvo com sucesso!')
+            }).catch(error => {
+                messages.mensagemErro(error.response.data)
+            })
     }
 
     render() {
