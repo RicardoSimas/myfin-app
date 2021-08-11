@@ -36,7 +36,7 @@ class Home extends React.Component {
                 <hr className="my-4"></hr>
                 <p>E essa é sua área administrativa. Utilize o menu ou um dos botões abaixo para nevegar pelo sistema.</p>
                 <p className="lead"></p>
-                <a className="btn btn-danger btn-lg" href="/" role="button"><i
+                <a className="btn btn-danger btn-lg" href="#/cadastro-lancamentos" role="button"><i
                     className="fa fa-users"></i> Cadastrar Lançamento </a>
             </div>
         )
