@@ -16,12 +16,25 @@ class CadastroLancamentos extends React.Component {
         mes: '',
         ano: '',
         tipo: '',
-        status: ''
+        status: '',
+        usuario: null
     }
 
     constructor() {
         super();
         this.lancamentoService = new LancamentoService();
+    }
+
+    componentDidMount() {
+        const params = this.props.match.params
+        if (params.id) {
+            this.lancamentoService.obterPorId(params.id)
+                .then(response => {
+                    this.setState({ ...response.data, atualizando: true })
+                }).catch(error => {
+                    messages.mensagemErro(error.response.data)
+                });
+        }
     }
 
     handleChange = (event) => {
@@ -35,10 +48,33 @@ class CadastroLancamentos extends React.Component {
         this.props.history.push('/home');
     }
 
+    atualizar = () => {
+        const { descricao, valor, mes, ano, tipo, status, id, usuario } = this.state;
+
+        const lancamento = {
+            descricao: descricao,
+            valor: valor,
+            mes: mes,
+            ano: ano,
+            tipo: tipo,
+            status: status,
+            id: id,
+            usuario: usuario,
+            atualizando: false
+        };
+
+        this.lancamentoService.atualizar(lancamento)
+            .then(response => {
+                this.props.history.push('/consulta-lancamentos');
+                messages.mensagemSucesso('Lançamento atualizado com sucesso!')
+            }).catch(error => {
+                messages.mensagemErro(error.response.data)
+            })
+    }
+
     submit = () => {
 
         const usuarioLogado = LocalStorageService.getItem('_user_logado')
-
 
         const { descricao, valor, mes, ano, tipo } = this.state;
 
@@ -66,7 +102,7 @@ class CadastroLancamentos extends React.Component {
         const meses = this.lancamentoService.getListaMeses();
 
         return (
-            <Card title="Cadastro de Lançamento">
+            <Card title={this.state.atualizando ? 'Atualização de Lançamento' : 'Cadastro de Lançamento'}>
                 <div className="row">
                     <div className="col-md-12">
                         <FormGroup id="inputDescricao" label="Descrição: *">
@@ -134,10 +170,21 @@ class CadastroLancamentos extends React.Component {
                         </FormGroup>
                     </div>
                 </div>
-                <br />
-                <button onClick={this.submit} className="btn btn-success" type="button">Salvar</button>&nbsp;
-                <button onClick={this.cancelar} className="btn btn-danger" type="button">Cancelar</button>
-
+                <div className="row">
+                    <div className="col-md-6">
+                    <br />
+                        {this.state.atualizando ?
+                            (
+                                <button onClick={this.atualizar} className="btn btn-success" type="button">Atualizar</button>
+                            ) :
+                            (
+                                <button onClick={this.submit} className="btn btn-success" type="button">Salvar</button>
+                            )
+                        }
+                        
+                        <button onClick={this.cancelar} className="btn btn-danger" type="button">Cancelar</button>
+                    </div>
+                </div>
             </Card>
         )
     }
