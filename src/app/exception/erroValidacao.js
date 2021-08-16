@@ -1,5 +1,5 @@
-function erroValidacao(mensagens){
+function ErroValidacao(mensagens){
     this.mensagens = mensagens;
 }
 
-export default erroValidacao;
+export default ErroValidacao;
