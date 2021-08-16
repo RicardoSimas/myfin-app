@@ -87,6 +87,16 @@ class CadastroLancamentos extends React.Component {
             usuario: usuarioLogado.id
         };
 
+        try {
+            this.lancamentoService.validar(lancamento);
+        }catch(erro) {
+            const mensagens = erro.mensagens;
+            mensagens.forEach(msg => {
+                messages.mensagemErro(msg);
+                return false;
+            });
+        }
+
         this.lancamentoService.salvar(lancamento)
             .then(response => {
                 this.props.history.push('/consulta-lancamentos');
@@ -172,7 +182,7 @@ class CadastroLancamentos extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-md-6">
-                    <br />
+                        <br />
                         {this.state.atualizando ?
                             (
                                 <button onClick={this.atualizar} className="btn btn-success" type="button">Atualizar</button>
@@ -181,7 +191,7 @@ class CadastroLancamentos extends React.Component {
                                 <button onClick={this.submit} className="btn btn-success" type="button">Salvar</button>
                             )
                         }
-                        
+
                         <button onClick={this.cancelar} className="btn btn-danger" type="button">Cancelar</button>
                     </div>
                 </div>
