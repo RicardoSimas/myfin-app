@@ -89,7 +89,7 @@ class CadastroLancamentos extends React.Component {
 
         try {
             this.lancamentoService.validar(lancamento);
-        }catch(erro) {
+        } catch (erro) {
             const mensagens = erro.mensagens;
             mensagens.forEach(msg => {
                 messages.mensagemErro(msg);
@@ -162,7 +162,8 @@ class CadastroLancamentos extends React.Component {
                     </div>
                     <div className="col-md-4">
                         <FormGroup id="inputTipo" label="Tipo: *">
-                            <SelectMenu id="inputTipo"
+                            <SelectMenu
+                                id="inputTipo"
                                 lista={tipos}
                                 className="form-control"
                                 name="tipo"
@@ -172,7 +173,8 @@ class CadastroLancamentos extends React.Component {
                     </div>
                     <div className="col-md-4">
                         <FormGroup id="inputStatus" label="Status: ">
-                            <input type="text"
+                            <input
+                                type="text"
                                 className="form-control"
                                 disabled={true}
                                 name="status"
@@ -185,14 +187,29 @@ class CadastroLancamentos extends React.Component {
                         <br />
                         {this.state.atualizando ?
                             (
-                                <button onClick={this.atualizar} className="btn btn-success" type="button">Atualizar</button>
+                                <button
+                                    onClick={this.atualizar}
+                                    className="btn btn-success"
+                                    type="button">
+                                    <i className="pi pi-save p-mr-2"> Salvar</i>
+                                </button>
                             ) :
                             (
-                                <button onClick={this.submit} className="btn btn-success" type="button">Salvar</button>
+                                <button
+                                    onClick={this.submit}
+                                    className="btn btn-success"
+                                    type="button">
+                                    <i className="pi pi-plus p-mr-2"> Cadastrar</i>
+                                </button>
                             )
                         }
 
-                        <button onClick={this.cancelar} className="btn btn-danger" type="button">Cancelar</button>
+                        <button
+                            onClick={this.cancelar}
+                            className="btn btn-danger"
+                            type="button">
+                            <i className="pi pi-times p-mr-2"> Cancelar</i>
+                        </button>
                     </div>
                 </div>
             </Card>

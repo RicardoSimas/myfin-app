@@ -2,11 +2,11 @@ import React from 'react';
 import Card from '../components/card'
 import FormGroup from '../components/form-group';
 
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import UsuarioService from '../app/service/usuarioService'
 import LocalStorageService from '../app/service/localStorageService';
-import {mensagemErro} from '../components/toastr'
+import { mensagemErro } from '../components/toastr'
 
 class Login extends React.Component {
 
@@ -15,19 +15,19 @@ class Login extends React.Component {
         senha: ''
     }
 
-    constructor(){
+    constructor() {
         super();
         this.service = new UsuarioService();
     }
 
     entrar = async () => {
         this.service.autenticar({
-            email : this.state.email,
-            senha : this.state.senha
-        }).then( response => {
+            email: this.state.email,
+            senha: this.state.senha
+        }).then(response => {
             LocalStorageService.setItem('_user_logado', response.data)
             this.props.history.push('/home')
-        }).catch( erro => {
+        }).catch(erro => {
             mensagemErro(erro.response.data)
         })
     }
@@ -65,9 +65,17 @@ class Login extends React.Component {
                                                     placeholder="Digite a Senha">
                                                 </input>
                                             </FormGroup>
-                                            <br/>
-                                            <button onClick={this.entrar} className="btn btn-success">Entrar</button>
-                                            <button onClick={this.prepareCadastrar} className="btn btn-danger">Cadastrar</button>
+                                            <br />
+                                            <button
+                                                onClick={this.entrar}
+                                                className="btn btn-success">
+                                                <i className="pi pi-sign-in p-mr-2"> Entrar</i>
+                                            </button>
+                                            <button
+                                                onClick={this.prepareCadastrar}
+                                                className="btn btn-danger">
+                                                <i className="pi pi-plus p-mr-2"> Cadastrar</i>
+                                            </button>
                                         </fieldset>
                                     </div>
                                 </div>
@@ -80,4 +88,4 @@ class Login extends React.Component {
     }
 }
 
-export default withRouter(Login) 
+export default withRouter(Login)

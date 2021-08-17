@@ -12,29 +12,31 @@ export default function LancamentosTable(props) {
                 <td>{lancamento.mes}</td>
                 <td>{lancamento.status}</td>
                 <td>
-                    <button
+                    <button title="Efetivar"
                         className="btn btn-success"
                         onClick={e => props.alterarStatus(lancamento, 'EFETIVADO')}
+                        disabled={ lancamento.status !== 'PENDENTE'}
                         type="button">
-                        Efetivar
+                        <i className="pi pi-check p-mr-2"></i>
                     </button>
-                    <button
+                    <button title="Cancelar"
                         type="button"
                         className="btn btn-warning"
+                        disabled={ lancamento.status !== 'PENDENTE'}
                         onClick={e => props.alterarStatus(lancamento, 'CANCELADO')}>
-                        Cancelar
+                        <i className="pi pi-times p-mr-2"></i>
                     </button>
-                    <button
+                    <button title="Editar"
                         type="button"
                         className="btn btn-primary"
                         onClick={e => props.editar(lancamento.id)}>
-                        Editar
+                        <i className="pi pi-pencil p-mr-2"></i>
                     </button>
-                    <button
+                    <button title="Deletar"
                         type="button"
                         className="btn btn-danger"
                         onClick={e => props.deletar(lancamento)}>
-                        Deletar
+                        <i className="pi pi-trash p-mr-2"></i>
                     </button>
                 </td>
             </tr>
