@@ -56,7 +56,7 @@ class ConsultaLancamentos extends React.Component {
         this.props.history.push(`/cadastro-lancamentos/${id}`)
     }
 
-    formCadastrarLancamento = () =>{
+    formCadastrarLancamento = () => {
         this.props.history.push('/cadastro-lancamentos');
     }
 
@@ -74,11 +74,26 @@ class ConsultaLancamentos extends React.Component {
                 const lancamentos = this.state.lancamentos;
                 const index = lancamentos.indexOf(this.state.lancamentoDeletar);
                 lancamentos.splice(index, 1);
-                this.setState({lancamentos: lancamentos, showConfirmDialog: false});
+                this.setState({ lancamentos: lancamentos, showConfirmDialog: false });
 
                 messages.mensagemSucesso('Lançamento deletado com sucesso!')
             }).catch(error => {
                 messages.mensagemErro('Ocorreu um erro ao deletar lançamento.')
+            })
+    }
+
+    alterarStatus = (lancamento, status) => {
+        this.service
+            .alterarStatus(lancamento.id, status)
+            .then(response => {
+                const lancamentos = this.state.lancamentos;
+                const index = lancamentos.indexOf(lancamento)
+                if (index !== -1) {
+                    lancamento['status'] = status;
+                    lancamentos[index] = lancamento;
+                    this.setState({ lancamento })
+                }
+                messages.mensagemSucesso('Status atualizado com sucesso!')
             })
     }
 
@@ -91,7 +106,7 @@ class ConsultaLancamentos extends React.Component {
                 <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelDelete} className="p-button-text" />
                 <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar} autoFocus />
             </div>
-        );       
+        );
 
         return (
             <Card title="Consulta Lançamentos">
@@ -151,7 +166,8 @@ class ConsultaLancamentos extends React.Component {
                         <div className="bs-component">
                             <LancamentosTable lancamentos={this.state.lancamentos}
                                 deletar={this.abrirConfirmacao}
-                                editar={this.editar}>
+                                editar={this.editar}
+                                alterarStatus={this.alterarStatus}>
                             </LancamentosTable>
                         </div>
                     </div>
