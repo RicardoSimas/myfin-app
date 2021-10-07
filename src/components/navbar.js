@@ -1,16 +1,8 @@
 import React from 'react'
 import NavBarItem from './navbarItem'
-import AuthService from '../app/service/authService'
+import { AuthConsumer } from '../main/provedorAutenticacao';
 
-const deslogar = () => {
-    AuthService.removerUsuarioAutenticado();
-}
-
-const isUsuarioAutenticado = () => {
-    return AuthService.isUsuarioAutenticado();
-}
-
-function Navbar() {
+function Navbar(props) {
     return (
         <div className="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
             <div className="container">
@@ -20,10 +12,10 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav">
-                        <NavBarItem render={isUsuarioAutenticado()} href="#/home" label="Home"></NavBarItem>
-                        <NavBarItem render={isUsuarioAutenticado()} href="#/cadastro-usuarios" label="Cadastrar"></NavBarItem>
-                        <NavBarItem render={isUsuarioAutenticado()} href="#/consulta-lancamentos" label="Lançamentos"></NavBarItem>
-                        <NavBarItem render={isUsuarioAutenticado()} onClick={deslogar} href="#/login" label="Sair"></NavBarItem>
+                        <NavBarItem render={props.isUsuarioAutenticado} href="#/home" label="Home"></NavBarItem>
+                        <NavBarItem render={props.isUsuarioAutenticado} href="#/cadastro-usuarios" label="Cadastrar"></NavBarItem>
+                        <NavBarItem render={props.isUsuarioAutenticado} href="#/consulta-lancamentos" label="Lançamentos"></NavBarItem>
+                        <NavBarItem render={props.isUsuarioAutenticado} onClick={props.deslogar} href="#/login" label="Sair"></NavBarItem>
                     </ul>
                 </div>
             </div>
@@ -31,4 +23,8 @@ function Navbar() {
     )
 }
 
-export default Navbar
+export default () => (
+    <AuthConsumer>
+        {(context) => (<Navbar isUsuarioAutenticado={context.isAutenticado} deslogar={context.encerrarSessao} />)}
+    </AuthConsumer>
+)
